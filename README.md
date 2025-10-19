@@ -1,4 +1,4 @@
-# demologinfirebase
+# E-commerce Flutter App 
 
 A new Flutter project.
 
