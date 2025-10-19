@@ -9,6 +9,6 @@ A new Flutter project.
 
 
 ## Thành viên nhóm:
-- Nguyễn Văn Phát - 2274802010636
+- Nguyễn Văn Phát - 2274802010636: Nhóm trưởng
 - Trương Hoài Khang 
 - Lý Đức Huy
