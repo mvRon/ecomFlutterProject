@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "685703390929",
+    "firebase_url": "https://e-com-flutter-fef78-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "e-com-flutter-fef78",
+    "storage_bucket": "e-com-flutter-fef78.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685703390929:android:429f36049eaf20afb587f0",
+        "android_client_info": {
+          "package_name": "com.example.demologinfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4mu3uWb2e1F3Bqb1ypVsT_NwnUqJnBbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
