@@ -2,7 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart'; // Tệp này được tạo tự động bởi flutterfire_cli
-import 'login_screen.dart';     // Chúng ta sẽ tạo tệp này ngay sau đây
+import 'features/auth/login_screen.dart';     // Đường dẫn đã được cập nhật
 
 void main() async {
   // Đảm bảo Flutter đã sẵn sàng
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // Màn hình đầu tiên là LoginScreen
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }

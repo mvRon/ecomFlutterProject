@@ -1,7 +1,7 @@
-// lib/login_screen.dart
+// lib/features/auth/login_screen.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';      // Màn hình sẽ đến sau khi đăng nhập
+import '../home/home_screen.dart';      // Màn hình sẽ đến sau khi đăng nhập
 import 'register_screen.dart'; // Màn hình đăng ký
 
 class LoginScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       User? user = userCredential.user;
 
       //log dữ liệu user
-      print('Đăng nhập với user: \$user');
+      print('Đăng nhập với user: $user');
 
       if (user != null) {
         // BẮT BUỘC: Tải lại thông tin user để cập nhật trạng thái mới nhất
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Đã xảy ra lỗi: \$e')),
+          SnackBar(content: Text('Đã xảy ra lỗi: $e')),
         );
       }
     }
