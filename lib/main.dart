@@ -6,7 +6,7 @@ import 'features/products/providers/product_detail_provider.dart';
 import 'features/products/providers/product_provider.dart';
 import 'features/products/screens/product_list_screen.dart';
 import 'firebase_options.dart'; // Tệp này được tạo tự động bởi flutterfire_cli
-// import 'features/auth/login_screen.dart';     // Đường dẫn đã được cập nhật
+import 'features/auth/login_screen.dart';     // Đường dẫn đã được cập nhật
 
 void main() async {
   // Đảm bảo Flutter đã sẵn sàng
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // Màn hình đầu tiên là ProductListScreen để demo
-      home: const ProductListScreen(),
+      home: const LoginScreen(),
     );
   }
 }

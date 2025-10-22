@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/comment_model.dart';
@@ -18,6 +19,7 @@ class _CommentSectionState extends State<CommentSection> {
   final _commentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isPosting = false;
+  final User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> _postComment() async {
     if (_formKey.currentState!.validate()) {
@@ -25,7 +27,7 @@ class _CommentSectionState extends State<CommentSection> {
 
       final comment = Comment(
         // TODO: Thay bằng ID của user đang đăng nhập
-        userId: 'temp_user_id',
+        userId: user?.email ?? 'anonymous',
         text: _commentController.text,
         createdAt: Timestamp.now(), // Sẽ được thay bằng serverTimestamp ở model
       );
@@ -124,7 +126,7 @@ class _CommentSectionState extends State<CommentSection> {
               children: [
                 Text(
                   // TODO: Thay bằng tên user thật
-                  'User ID: ${comment.userId.substring(0, 6)}...',
+                  '${comment.userId}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
