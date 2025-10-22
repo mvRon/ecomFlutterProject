@@ -1,7 +1,7 @@
-// lib/home_screen.dart
+// lib/features/home/home_screen.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login_screen.dart'; // Để quay lại khi đăng xuất
+import '../auth/login_screen.dart'; // Để quay lại khi đăng xuất
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
