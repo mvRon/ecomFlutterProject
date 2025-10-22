@@ -19,6 +19,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   late TextEditingController _nameController;
   late TextEditingController _priceController;
   late TextEditingController _imageUrlController;
+  late TextEditingController _descriptionController;
 
   bool _isLoading = false;
   bool get _isEditing => widget.product != null;
@@ -29,6 +30,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
     _nameController = TextEditingController(text: widget.product?.name);
     _priceController = TextEditingController(text: widget.product?.price.toString());
     _imageUrlController = TextEditingController(text: widget.product?.imageUrl);
+    _descriptionController = TextEditingController(text: widget.product?.description);
   }
 
   @override
@@ -36,6 +38,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
     _nameController.dispose();
     _priceController.dispose();
     _imageUrlController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -48,6 +51,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
         name: _nameController.text,
         price: double.tryParse(_priceController.text) ?? 0.0,
         imageUrl: _imageUrlController.text,
+        description: _descriptionController.text,
       );
 
       try {
@@ -102,6 +106,17 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'Mô tả sản phẩm',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) => (value == null || value.isEmpty) ? 'Vui lòng nhập mô tả' : null,
+                textInputAction: TextInputAction.next,
+                maxLines: 3,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
                 controller: _priceController,
                 decoration: const InputDecoration(
                   labelText: 'Giá',
@@ -142,4 +157,3 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
     );
   }
 }
-

@@ -76,7 +76,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '\$${product.price.toStringAsFixed(2)}',
+                        '${product.price.toStringAsFixed(0)} VNĐ',
                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.green),
                       ),
                       const SizedBox(height: 8),
@@ -87,6 +87,59 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Text(
                             '${product.avgRating.toStringAsFixed(1)} (${product.reviewCount} đánh giá)',
                             style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Mô tả',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        product.description.isEmpty ? product.name : product.description,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Đã nhấn thêm vào giỏ hàng')),
+                                );
+                              },
+                              icon: const Icon(Icons.add_shopping_cart),
+                              label: const Text('Thêm vào giỏ'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange.shade700,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Đã nhấn vào mua ngay')),
+                                );
+                              },
+                              child: const Text('Mua ngay'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -126,4 +179,3 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 }
-
