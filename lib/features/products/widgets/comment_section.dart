@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../user/providers/user_provider.dart'; // Import UserProvider
 import '../models/comment_model.dart';
 import '../providers/product_detail_provider.dart';
 import 'package:intl/intl.dart';
@@ -19,17 +20,29 @@ class _CommentSectionState extends State<CommentSection> {
   final _commentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isPosting = false;
-  final User? user = FirebaseAuth.instance.currentUser;
+  // final User? user = FirebaseAuth.instance.currentUser; // Sẽ không dùng dòng này nữa
 
   Future<void> _postComment() async {
+    // Lấy user từ UserProvider
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
+
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Vui lòng đăng nhập để bình luận.')),
+      );
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       setState(() => _isPosting = true);
 
       final comment = Comment(
-        // TODO: Thay bằng ID của user đang đăng nhập
-        userId: user?.email ?? 'anonymous',
+        id: user.uid, // Sử dụng uid từ UserProvider
+        userName: user.displayName ?? 'Người dùng', // Sử dụng displayName từ UserProvider
         text: _commentController.text,
-        createdAt: Timestamp.now(), // Sẽ được thay bằng serverTimestamp ở model
+        createdAt: Timestamp.now(),
       );
 
       try {
@@ -125,8 +138,7 @@ class _CommentSectionState extends State<CommentSection> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  // TODO: Thay bằng tên user thật
-                  '${comment.userId}',
+                  comment.userName, // Hiển thị tên người dùng
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
@@ -144,4 +156,3 @@ class _CommentSectionState extends State<CommentSection> {
     );
   }
 }
-

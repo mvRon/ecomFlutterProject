@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Review {
   final String? id;
-  final String userId;
+  final String userName;
   final double rating;
   final String text;
   final Timestamp createdAt;
 
   Review({
     this.id,
-    required this.userId,
+    required this.userName,
     required this.rating,
     required this.text,
     required this.createdAt,
@@ -19,7 +19,7 @@ class Review {
     final data = snapshot.data()!;
     return Review(
       id: snapshot.id,
-      userId: data['userId'],
+      userName: data['userName'],
       rating: (data['rating'] as num).toDouble(),
       text: data['text'],
       createdAt: data['createdAt'],
@@ -28,7 +28,7 @@ class Review {
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
+      'userName': userName,
       'rating': rating,
       'text': text,
       'createdAt': FieldValue.serverTimestamp(),

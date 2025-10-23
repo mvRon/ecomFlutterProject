@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'features/products/providers/product_detail_provider.dart';
 import 'features/products/providers/product_provider.dart';
+import 'features/user/providers/user_provider.dart'; // Import UserProvider
 import 'features/products/screens/product_list_screen.dart';
 import 'firebase_options.dart'; // Tệp này được tạo tự động bởi flutterfire_cli
 import 'features/auth/login_screen.dart';     // Đường dẫn đã được cập nhật
@@ -23,6 +24,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => ProductDetailProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()), // Thêm UserProvider
       ],
       child: const MyApp(),
     ),

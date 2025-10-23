@@ -1,6 +1,9 @@
 // lib/features/auth/register_screen.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../user/models/user_model.dart'; // Import UserModel
+import '../user/services/user_service.dart'; // Import UserService
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -10,9 +13,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // Các biến để lấy dữ liệu từ ô nhập liệu
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService _userService = UserService(); // Khởi tạo UserService
   bool _isLoading = false; // Biến để hiển thị trạng thái đang tải
 
   // Hàm xử lý đăng ký
@@ -27,40 +31,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       // Sử dụng Firebase Auth để tạo người dùng mới
       UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await _auth.createUserWithEmailAndPassword(
         email: _emailController.text.trim(), // .trim() để xóa khoảng trắng
         password: _passwordController.text.trim(),
       );
 
-      // *** THÊM PHẦN NÀY VÀO ***
       User? user = userCredential.user;
-      if (user != null && !user.emailVerified) {
-        // Nếu user tồn tại và email chưa được xác thực
+      if (user != null) {
         // Gửi email xác thực
         await user.sendEmailVerification();
 
-        // Thông báo cho người dùng
+        // TẠO USER TRONG FIRESTORE
+        final newUser = UserModel(
+          uid: user.uid,
+          email: user.email!,
+          displayName: 'New User', // Tên mặc định
+        );
+        await _userService.saveUser(newUser);
+
+
+        // Hiển thị thông báo và quay về màn hình đăng nhập
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.')),
           );
         }
       }
-      // *** KẾT THÚC PHẦN THÊM ***
 
       // Quay lại màn hình đăng nhập
       if (mounted) {
         Navigator.of(context).pop();
       }
 
-      // // Nếu đăng ký thành công, hiển thị thông báo
-      // if (mounted) { // Kiểm tra xem widget còn tồn tại không
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(content: Text('Đăng ký thành công! Vui lòng đăng nhập.')),
-      //   );
-      //   // Quay lại màn hình đăng nhập
-      //   Navigator.of(context).pop();
-      // }
 
     } on FirebaseAuthException catch (e) {
       // Nếu có lỗi (ví dụ: email đã tồn tại, mật khẩu quá yếu)

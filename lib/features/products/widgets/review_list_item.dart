@@ -20,7 +20,7 @@ class ReviewListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // TODO: Thay thế bằng tên user thật khi có hệ thống user
-                Text('${review.userId.substring(0, 6)}...', style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('${review.userName.substring(0, 6)}...', style: const TextStyle(fontWeight: FontWeight.bold)),
                 Text(
                   DateFormat.yMd().add_jm().format(review.createdAt.toDate()),
                   style: Theme.of(context).textTheme.bodySmall,

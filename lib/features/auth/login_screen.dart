@@ -1,9 +1,10 @@
 // lib/features/auth/login_screen.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import Provider
 import '../home/home_screen.dart';      // Màn hình sẽ đến sau khi đăng nhập
+import '../user/providers/user_provider.dart'; // Import UserProvider
 import 'register_screen.dart'; // Màn hình đăng ký
-import '/features/products/screens/product_list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,9 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) return; // Luôn kiểm tra context sau một lệnh await
 
         if (user.emailVerified) {
+          // TẢI DỮ LIỆU USER VÀO PROVIDER
+          await Provider.of<UserProvider>(context, listen: false).fetchUser(user.uid);
+
+          if (!mounted) return;
+
           // 1. ĐÃ XÁC THỰC: Cho vào HomeScreen
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const ProductListScreen()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()), // Chuyển đến HomeScreen
           );
         } else {
           // 2. CHƯA XÁC THỰC: Hiển thị hộp thoại cảnh báo
