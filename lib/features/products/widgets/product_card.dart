@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '\$${product.price.toStringAsFixed(2)}',
+                    '${product.price.toStringAsFixed(2)} VNĐ',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.green),
                   ),
                   const SizedBox(height: 4),
