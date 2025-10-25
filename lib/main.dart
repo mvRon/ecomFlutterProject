@@ -1,8 +1,12 @@
 // lib/main.dart
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'features/products/providers/product_detail_provider.dart';
+import 'features/products/providers/product_provider.dart';
+import 'features/products/screens/product_list_screen.dart';
 import 'firebase_options.dart'; // Tệp này được tạo tự động bởi flutterfire_cli
-import 'login_screen.dart';     // Chúng ta sẽ tạo tệp này ngay sau đây
+import 'features/auth/login_screen.dart';     // Đường dẫn đã được cập nhật
 
 void main() async {
   // Đảm bảo Flutter đã sẵn sàng
@@ -14,7 +18,15 @@ void main() async {
   );
 
   // Chạy ứng dụng
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ProductDetailProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,9 +38,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Firebase Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // Màn hình đầu tiên là LoginScreen
-      home: LoginScreen(),
+      // Màn hình đầu tiên là ProductListScreen để demo
+      home: const LoginScreen(),
     );
   }
 }
